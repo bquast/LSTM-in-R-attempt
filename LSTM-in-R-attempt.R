@@ -193,7 +193,7 @@ for (j in 1:length(X1)) {
     synapse_h_f = synapse_h_f + ( synapse_h_f_update * alpha )
     synapse_h_o = synapse_h_o + ( synapse_h_o_update * alpha )
     synapse_h_c = synapse_h_c + ( synapse_h_c_update * alpha )
-    synapse_b_1   = synapse_b_1   + ( synapse_b_1_update   * alpha )
+    synapse_b_1 = synapse_b_1 + ( synapse_b_1_update   * alpha )
     synapse_b_i = synapse_b_i + ( synapse_b_i_update * alpha )
     synapse_b_f = synapse_b_f + ( synapse_b_f_update * alpha )
     synapse_b_o = synapse_b_o + ( synapse_b_o_update * alpha )
