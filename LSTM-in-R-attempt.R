@@ -149,6 +149,13 @@ for (j in 1:length(X1)) {
     layer_1 = layer_1_values[dim(layer_1_values)[1]-(position-1),]
     prev_layer_1 = layer_1_values[dim(layer_1_values)[1]-position,]
     
+    # something like this
+    # recontruct layer_1_error
+    # reconstruct c_t
+    delta_out_1 = Delta_1 + Delta_out_1
+    delta_state_1 = delta_out_1 * layer_1_o * (1-tanhsq(c_t)) + delta_state_next * layer_next_f # contains non-existant variables
+    
+    
     # error at output layer
     layer_1_delta = layer_1_deltas[dim(layer_1_deltas)[1]-(position-1),]
     # error at hidden layer
