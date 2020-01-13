@@ -123,10 +123,10 @@ for (j in 1:length(X1)) {
     c_t_m1  = rbind(c_t_m1, c_t)
     
     # output layer (new binary representation)
-    layer_2 = sigmoid(layer_1 %*% synapse_1 + synapse_b_1)
+    # layer_2 = sigmoid(layer_1 %*% synapse_1 + synapse_b_1)
     
     # did we miss?... if so, by how much?
-    layer_2_error = y - layer_2
+    layer_1_error = y - layer_1
     layer_2_deltas = rbind(layer_2_deltas, layer_2_error * sigmoid_output_to_derivative(layer_2))
     overallError = overallError + round(abs(layer_2_error))
     
