@@ -131,7 +131,7 @@ for (j in 1:length(X1)) {
     overallError = overallError + round(abs(layer_2_error))
     
     # decode estimate so we can print it out
-    d[position] = round(layer_2)
+    d[position] = round(layer_1)
     
     # store hidden layer so we can print it out
     layer_1_values = rbind(layer_1_values, layer_1)
