@@ -100,7 +100,7 @@ for (j in 1:length(X1)) {
   
   overallError = 0
   
-  layer_2_deltas = matrix(0)
+  layer_1_deltas = matrix(0)
   layer_1_values = matrix(0, nrow=1, ncol = hidden_dim)
   
   # initialise state cell
@@ -127,7 +127,7 @@ for (j in 1:length(X1)) {
     
     # did we miss?... if so, by how much?
     layer_1_error = y - layer_1
-    layer_2_deltas = rbind(layer_2_deltas, layer_2_error * sigmoid_output_to_derivative(layer_2))
+    layer_1_deltas = rbind(layer_1_deltas, layer_2_error * sigmoid_output_to_derivative(layer_2))
     overallError = overallError + round(abs(layer_2_error))
     
     # decode estimate so we can print it out
@@ -150,20 +150,20 @@ for (j in 1:length(X1)) {
     prev_layer_1 = layer_1_values[dim(layer_1_values)[1]-position,]
     
     # error at output layer
-    layer_2_delta = layer_2_deltas[dim(layer_2_deltas)[1]-(position-1),]
+    layer_1_delta = layer_1_deltas[dim(layer_1_deltas)[1]-(position-1),]
     # error at hidden layer
-    layer_1_i_delta = (future_layer_1_i_delta %*% t(synapse_h_i) + layer_2_delta %*% t(synapse_1)) *
+    layer_1_i_delta = (future_layer_1_i_delta %*% t(synapse_h_i) + layer_1_delta %*% t(synapse_1)) *
       sigmoid_output_to_derivative(tanh_output_to_derivative(layer_1))
-    layer_1_f_delta = (future_layer_1_f_delta %*% t(synapse_h_f) + layer_2_delta %*% t(synapse_1)) *
+    layer_1_f_delta = (future_layer_1_f_delta %*% t(synapse_h_f) + layer_1_delta %*% t(synapse_1)) *
       sigmoid_output_to_derivative(tanh_output_to_derivative(layer_1))
-    layer_1_o_delta = (future_layer_1_o_delta %*% t(synapse_h_o) + layer_2_delta %*% t(synapse_1)) *
+    layer_1_o_delta = (future_layer_1_o_delta %*% t(synapse_h_o) + layer_1_delta %*% t(synapse_1)) *
       sigmoid_output_to_derivative(layer_1)
-    layer_1_c_delta = (future_layer_1_c_delta %*% t(synapse_h_c) + layer_2_delta %*% t(synapse_1)) *
+    layer_1_c_delta = (future_layer_1_c_delta %*% t(synapse_h_c) + layer_1_delta %*% t(synapse_1)) *
       tanh_output_to_derivative(tanh_output_to_derivative(layer_1))
     
     
     # let's update all our weights so we can try again
-    synapse_1_update   = synapse_1_update   + matrix(layer_1)      %*% layer_2_delta
+    synapse_1_update   = synapse_1_update   + matrix(layer_1)      %*% layer_1_delta
     synapse_h_i_update = synapse_h_i_update + matrix(prev_layer_1) %*% layer_1_i_delta
     synapse_h_f_update = synapse_h_f_update + matrix(prev_layer_1) %*% layer_1_f_delta
     synapse_h_o_update = synapse_h_o_update + matrix(prev_layer_1) %*% layer_1_o_delta
@@ -172,7 +172,7 @@ for (j in 1:length(X1)) {
     synapse_0_f_update = synapse_0_f_update + t(X) %*% layer_1_f_delta
     synapse_0_o_update = synapse_0_o_update + t(X) %*% layer_1_o_delta
     synapse_0_c_update = synapse_0_c_update + t(X) %*% layer_1_c_delta
-    synapse_b_1_update = synapse_b_1_update + layer_2_delta
+    synapse_b_1_update = synapse_b_1_update + layer_1_delta
     synapse_b_i_update = synapse_b_i_update + layer_1_i_delta
     synapse_b_f_update = synapse_b_f_update + layer_1_f_delta
     synapse_b_o_update = synapse_b_o_update + layer_1_o_delta
