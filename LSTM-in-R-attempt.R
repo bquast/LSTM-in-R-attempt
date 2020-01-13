@@ -117,8 +117,8 @@ for (j in 1:length(X1)) {
     i_t     = sigmoid((X%*%synapse_0_i) + (layer_1_values[dim(layer_1_values)[1],] %*% synapse_h_i) + synapse_b_i) # add bias?
     f_t     = sigmoid((X%*%synapse_0_f) + (layer_1_values[dim(layer_1_values)[1],] %*% synapse_h_f) + synapse_b_f) # add bias?
     o_t     = sigmoid((X%*%synapse_0_o) + (layer_1_values[dim(layer_1_values)[1],] %*% synapse_h_o) + synapse_b_o) # add bias?
-    c_in_t  = tanh(   (X%*%synapse_0_c) + (layer_1_values[dim(layer_1_values)[1],] %*% synapse_h_c) + synapse_b_c)
-    c_t     = (f_t * c_t_m1[dim(layer_1_values)[1],]) + (i_t * c_in_t)
+    a_t  = tanh(   (X%*%synapse_0_c) + (layer_1_values[dim(layer_1_values)[1],] %*% synapse_h_c) + synapse_b_c)
+    c_t     = (f_t * c_t_m1[dim(layer_1_values)[1],]) + (i_t * a_t)
     layer_1 = o_t * tanh(c_t)
     c_t_m1  = rbind(c_t_m1, c_t)
     
